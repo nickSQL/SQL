@@ -1,0 +1,16 @@
+--Creating a Clothing Store database.
+
+CREATE TABLE store (id INTEGER primary key, item_name TEXT, color TEXT, cost INTEGER, quantity INTEGER);
+INSERT INTO store VALUES
+(1, "Jean Jacket", "Navy Blue", 40, 1),
+(2, "Leather Pants", "Rouge", 55, 2),
+(3, "Button-up Shirt", "Black", 30, 4),
+(4, "Polo", "Grove Green", 25, 7),
+(5, "Joggers", "Gray", 20, 3);
+
+-- Ordering the clothing by price in ascending order.
+SELECT * FROM store
+ORDER BY cost ASC;
+
+--This takes the total sum of each item including its quantity.
+SELECT SUM(cost) * quantity FROM store
