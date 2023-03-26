@@ -1,0 +1,34 @@
+/* Create table about the people and what they do here */
+
+--Creating first table.
+CREATE table video_characters (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, video_game TEXT, relationship TEXT);
+INSERT INTO video_characters VALUES 
+(1, "Princess Zelda", 17, "Legend of Zelda Series", "King Hyrule - Father"),
+(2, "Chrom Ylisse", 20, "Fire Emblem Awakening", "Lissa Ylisse - Sister"),
+(3, "Giovanni", 53, "Pokemon", "Silver - Son"), (4, "Caeda", 17, "Fire Emblem 1 and 3", "Marth - Husband"),
+(5, "Link", 13, "Link to the Past", "Link's Uncle - Uncle"),
+(6, "Luffy", 19, "One Piece", "Monkey D. Garp - Grandfather"), 
+(7, "Sanji", 21, "One Piece", "Reiju - Sister"), 
+(8, "Claude von Riegan", 22, "Fire Emblem: Three Houses", "Dimitri Alexandre Blaiddyd - Distant Relative");
+
+--Creating second table.
+CREATE table video_characters2 (id INTEGER PRIMARY KEY, name TEXT, age INTEGER, video_game TEXT, relationship TEXT);
+INSERT INTO video_characters2 VALUES
+(1, "Dimitri Alexandre Blaiddyd", 22, "Fire Emblem: Three Houses", "Claude von Riegan - Distant Relative"),
+(2, "Monkey D. Garp", 78, "One Piece", "Luffy - Grandson"),
+(3, "Link's Uncle", 45, "Link to the Past", "Link - Nephew"), 
+(4, "Silver", 12, "Pokemon", "Giovanni - Father"),
+(5, "Reiju", 18, "One Piece", "Sanji - Brother"),
+(6, "Marth", 19, "Fire Emblem 1 and 3", "Caeda - Wife"),
+(7, "Lissa Ylisee", 13, "Fire Emblem Awakening", "Chrom - Brother"),
+(8, "Daphnes Johannos Hyrule", 65, "The Legend of Zelda", "Princess Zelda - Daughter");
+
+-- Calling both tables in the code.
+SELECT * FROM video_characters;
+SELECT * FROM video_characters2;
+
+-- Joining the tables together based on the character's relationships with each other.
+SELECT *
+FROM video_characters
+JOIN video_characters2
+ON video_characters.relationship = video_characters2.relationship;
