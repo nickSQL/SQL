@@ -1,0 +1,44 @@
+-- This query was used to find the number of orders placed in January.
+SELECT COUNT (orderID) -- Counting the total number using the OrderID's
+FROM JanSales
+WHERE length(orderID) = 6 -- These last two lines of code are to fileter out any invalid orderIDs. As all order IDs have 6 digits.
+AND orderID <> 'OrderID';
+
+-- This query was used to find the number of orders placed in January with an iPhone
+SELECT COUNT (orderID) 
+FROM JanSales
+WHERE product='iPhone'
+AND length (orderID) = 6
+AND orderID <> 'OrderID';
+
+-- Select the customer account numbers for all orders placed in February.
+SELECT distinct acctnum
+FROM customers cust
+INNER JOIN FebSales Feb
+WHERE length (orderid) = 6
+AND orderid <> 'Order ID'
+
+-- Finding product that sold for the lowest price in January
+SELECT distinct product, price
+FROM JanSales
+ORDER BY price ASC Limit 1
+
+-- Finding the lowest priced item in Janary
+SELECT sum (quantity) * price AS revenue, product
+FROM JanSales
+GROUP BY product
+
+--Finding order that was shipped to a specific address
+SELECT sum (Quantity), product, sum (quantity) * price as revnue
+FROM FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product
+
+-- Finding out how many customers ordered more than two products as well as finding the average
+SELECT count(distinct cust.acctnum), avg(quantity * price)
+FROM FebSales Feb
+LEFT JOIN customers cust
+ON Feb.orderid=cust.order_id
+WHERE Feb.Quantity > 2
+AND length(orderid) = 6
+AND orderid <> 'Order ID'
