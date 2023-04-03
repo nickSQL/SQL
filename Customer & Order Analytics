@@ -48,3 +48,27 @@ SELECT Product, SUM (quantity)
 FROM FebSales
 WHERE location like '%Los Angeles%'
 GROUP BY Product
+
+-- Finding thr number of headphones that were sold in February.
+SELECT distinct product, quantity
+FROM FebSales
+WHERE product LIKE '%Headphones%';
+
+-- Finding the average amount of orders placed in February.
+SELECT SUM (quantity)/count (c.acctnum) as Average
+FROM FebSales Feb
+JOIN customers c
+ON Feb.orderid = c.order_id;
+
+--Finding the average amount of orders placed in February BY customer account number.
+SELECT SUM (quantity * price)/ count (c.acctnum) as Average
+FROM FebSales Feb
+JOIN customers c
+ON Feb.orderid = c.acctnum;
+
+--Finding the highest item sold in Janaury.
+SELECT product, sum (quantity * price)
+FROM JanSales
+GROUP BY product
+ORDER BY sum (quantity*price) desc
+LIMIT 1;
