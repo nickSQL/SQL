@@ -68,6 +68,20 @@ GROUP BY artist_name
 HAVING loudness < -5
 ORDER BY loudness ASC;
 
+-- Using a CTE to calculate the average popularity for the artists in the table.
+-- Each artist with a popularity of 90 or higher is labeled a Top Star.
+WITH popularity_average_CTE AS (
+SELECT s.artist_name,
+AVG(s.popularity) AS average_popularity
+FROM SpotifyData s 
+GROUP BY s.artist_name
+)
+ 
+SELECT  artist_name,
+        average_popularity,
+        'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90;
 
 -- Finding the average danceability of each artist in the table.
 SELECT artist_name, AVG (danceability)
