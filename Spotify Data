@@ -1,0 +1,83 @@
+# For this project, I downloaded Spotify data from Kaggle and then imported it into SQL lite using a .csv file.
+# Finally, I performed analytics on the data using SQL.
+
+-- Calling the table in the code and reviewing what data questions I have that could help me find analytics.
+SELECT * 
+FROM Spotifydata;
+
+-- My first question was, "What is the Average Danceability for Doja Cat songs?"
+-- So, I determined the average danceability and filtered using the LIKE function.
+SELECT AVG (danceability) as Average_Dance
+FROM Spotifydata
+WHERE artist_name LIKE '%Doja Cat%';
+
+-- I then wanted to determine the maximum danceability.
+SELECT MAX (danceability), artist_name, track_name
+FROM Spotifydata;
+
+-- Then, I wanted to find the minimum as well.
+SELECT MIN (danceability), artist_name, track_name
+FROM Spotifydata;
+
+-- For this query, I wanted to get a more organized view of the data, which is why I ordered it by the ID number.
+SELECT * 
+FROM Spotifydata
+ORDER BY id ASC;
+
+-- I noticed that many artists in the table had songs featuring other artists.
+-- I wanted to determine the number of songs featuring other artists and then how poular each song was.
+SELECT *
+FROM Spotifydata
+WHERE track_name LIKE '%feat%'
+ORDER BY popularity DESC;
+
+-- Determining the 10 most popular songs.
+SELECT *
+FROM Spotifydata
+WHERE popularity > 90
+ORDER BY popularity DESC
+LIMIT 10;
+
+-- In this query, I used a CASE statement to rank the songs based on their popularity number.
+-- There are 4 categories, Platinum, Diamond, Gold, Silver, and Bronze.
+SELECT track_name, artist_name, popularity,
+    CASE
+        WHEN popularity >= 92
+        THEN "Platinum"
+        WHEN popularity BETWEEN 86 AND 91
+        THEN "Diamond"
+        WHEN popularity BETWEEN 75 AND 85
+        THEN "Gold"
+        WHEN popularity BETWEEN 70 AND 74
+        THEN "Silver"
+        ELSE "Bronze"
+        END AS 'Song Categories'
+        FROM Spotifydata
+        ORDER BY popularity DESC;
+        
+-- Determining the average noise in all songs in the table.       
+SELECT AVG (loudness) as Avg_Noise
+FROM Spotifydata;
+
+-- While querying, I noticed a correlation between loudness and energy. 
+-- I wrote this query to study the relationship futher.
+SELECT energy, artist_name, loudness
+FROM Spotifydata
+WHERE energy < 0.525
+GROUP BY artist_name
+HAVING loudness < -5
+ORDER BY loudness ASC;
+
+
+-- Finding the average danceability of each artist in the table.
+SELECT artist_name, AVG (danceability)
+FROM SpotifyData
+GROUP BY artist_name
+ORDER BY danceability DESC;
+
+-- Determing which artist had the longest song.
+SELECT artist_name, track_name, MAX (duration_ms)
+FROM SpotifyData
+GROUP BY artist_name
+ORDER BY duration_ms DESC
+LIMIT 1;
