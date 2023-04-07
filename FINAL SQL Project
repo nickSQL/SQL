@@ -1,0 +1,53 @@
+-- Filtering Customers who do not live in the United States.
+SELECT *
+FROM customers
+WHERE Country != 'USA';
+
+--Selecting customers who are from Brazil only.
+SELECT customerId, FirstName, LastName, Country
+FROM customers
+WHERE Country = 'Brazil';
+
+--Find the Invoices of customers who are from Brazil. 
+--The table should show the customer's full name, invoice ID,
+-- Date of the invoice and Billing County.
+SELECT  c.FirstName, c.LastName, i.BillingCountry, i.InvoiceDate, i.InvoiceID, c.Country, COUNT (*)
+FROM invoices i
+JOIN customers c
+ON i.CustomerID = c.CustomerID
+WHERE Country = 'Brazil'
+GROUP BY FirstName, LastName
+HAVING COUNT (*) > 1;
+
+--Showing Employees who are Sales Agents
+SELECT *
+FROM employees
+WHERE Title LIKE '%Agent%';
+
+--Find a unique and distinct list of billing countries from the Invoice Table.
+SELECT distinct BillingCountry
+FROM invoices;
+
+--Provide a query that shows the invoices associated with each sales agent. 
+SELECT emp.LastName, emp.Firstname, inv.InvoiceId
+FROM chinook.Employees emp 
+JOIN chinook.Customers cust ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices Inv ON Inv.CustomerId = cust.CustomerId;
+
+--Showing the invoice total for all invoices and customers.
+SELECT inv.total, cust.FirstName, cust.LastName, cust.Country, emp.Title
+FROM employees emp
+JOIN customers cust ON cust.SupportRepID = emp.EmployeeID
+JOIN invoices Inv ON Inv.CustomerID = cust.CustomerID;
+
+--Counting the number of invoices in the year 2009 alone.
+SELECT COUNT (*)
+FROM invoices
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+--Finding the total sum of all invoices in 2009.
+SELECT SUM (total)
+FROM invoices
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+--Do 10 - 14 
